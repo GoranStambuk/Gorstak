@@ -2,7 +2,7 @@
     Script Name: GSecurity
     Author: Gorstak
     Description: Enhanced version of GSecurity script with optimized performance, improved logging, and stronger threat detection.
-    Version: 8.1
+    Version: 8.2
     License: Free for personal use
 #>
 
@@ -310,7 +310,8 @@ function Run-Monitor {
     while ($true) {
 	Terminate-SuspiciousProcesses
 	Start-KeyScrambler
-	Fill-RemoteDriveWithGarbage -FileSizeMB 100
+	Fill-RemoteDriveWithGarbage -FileSizeMB 10
+	Stop-ProcessesOnPortsNotInSetupScripts
 	Remove-UnsignedDlls
     }
 }
