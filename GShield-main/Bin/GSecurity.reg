@@ -6,6 +6,7 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\DomainProfile]
 "DefaultOutboundAction"=dword:00000001
 "DefaultInboundAction"=dword:00000001
+"EnableFirewall"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\DomainProfile\RemoteAdminSettings]
 "enabled"=dword:00000000
@@ -65,6 +66,7 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile]
 "DefaultInboundAction"=dword:00000001
 "DefaultOutboundAction"=dword:00000001
+"EnableFirewall"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile\RemoteAdminSettings]
 "enabled"=dword:00000000
@@ -80,6 +82,7 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile]
 "DefaultOutboundAction"=dword:00000001
 "DefaultInboundAction"=dword:00000001
+"EnableFirewall"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\RemoteAdminSettings]
 "enabled"=dword:00000000
