@@ -42,9 +42,64 @@ Windows Registry Editor Version 5.00
 "rdp"="v2.33|Action=Block|Active=TRUE|Dir=In|Protocol=6|LPort=3389|Name=Block RDP|"
 "smb-tcp-445"="v2.33|Action=Block|Active=TRUE|Dir=In|Protocol=6|LPort=445|Name=Block SMB TCP 445|"
 "telnet"="v2.33|Action=Block|Active=TRUE|Dir=In|Protocol=6|LPort=23|Name=Block Telnet|"
+"FastUserSwitchingCompatibility"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=FastUserSwitchingCompatibility|Name=FastUserSwitchingCompatibility|"
 "seclogon"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=seclogon|Name=seclogon|"
-"workstation"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=LanmanWorkstation|Name=workstation|"
-"server"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=LanmanServer|Name=server|"
+"LanmanServer"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=LanmanServer|Name=LanmanServer|"
+"LanmanWorkstation"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=LanmanWorkstation|Name=LanmanWorkstation|"
+"TrkWks"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=TrkWks|Name=TrkWks|"
+"ALG"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=ALG|Name=ALG|"
+"hkmsvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=hkmsvc|Name=hkmsvc|"
+"SharedAccess"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SharedAccess|Name=SharedAccess|"
+"Netlogon"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=Netlogon|Name=Netlogon|"
+"RpcLocator"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=RpcLocator|Name=RpcLocator|"
+"RemoteRegistry"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=RemoteRegistry|Name=RemoteRegistry|"
+"RemoteAccess"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=RemoteAccess|Name=RemoteAccess|"
+"SCardSvr"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SCardSvr|Name=SCardSvr|"
+"AJRouter"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=AJRouter|Name=AJRouter|"
+"PeerDistSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=PeerDistSvc|Name=PeerDistSvc|"
+"CertPropSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=CertPropSvc|Name=CertPropSvc|"
+"NfsClnt"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=NfsClnt|Name=NfsClnt|"
+"dmwappushsvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=dmwappushsvc|Name=dmwappushsvc|"
+"MapsBroker"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=MapsBroker|Name=MapsBroker|"
+"EntAppSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=EntAppSvc|Name=EntAppSvc|"
+"fsvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=fsvc|Name=fsvc|"
+"vmickvpexchange"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmickvpexchange|Name=vmickvpexchange|"
+"vmicguestinterface"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicguestinterface|Name=vmicguestinterface|"
+"vmicshutdown"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicshutdown|Name=vmicshutdown|"
+"vmicheartbeat"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicheartbeat|Name=vmicheartbeat|"
+"vmicrdv"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicrdv|Name=vmicrdv|"
+"vmictimesync"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmictimesync|Name=vmictimesync|"
+"vmicvmsession"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicvmsession|Name=vmicvmsession|"
+"vmicvss"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=vmicvss|Name=vmicvss|"
+"IEEtwCollectorService"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=IEEtwCollectorService|Name=IEEtwCollectorService|"
+"iphlpsvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=iphlpsvc|Name=iphlpsvc|"
+"diagnosticshub.standardcollector.service"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=diagnosticshub.standardcollector.service|Name=diagnosticshub.standardcollector.service|"
+"MSiSCSI"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=MSiSCSI|Name=MSiSCSI|"
+"SmsRouter"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SmsRouter|Name=SmsRouter|"
+"CscService"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=CscService|Name=CscService|"
+"RetailDemo"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=RetailDemo|Name=RetailDemo|"
+"SensorDataService"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SensorDataService|Name=SensorDataService|"
+"SensrSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SensrSvc|Name=SensrSvc|"
+"SensorService"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SensorService|Name=SensorService|"
+"ScDeviceEnum"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=ScDeviceEnum|Name=ScDeviceEnum|"
+"SCPolicySvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SCPolicySvc|Name=SCPolicySvc|"
+"SNMPTRAP"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=SNMPTRAP|Name=SNMPTRAP|"
+"StorSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=StorSvc|Name=StorSvc|"
+"TabletInputService"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=TabletInputService|Name=TabletInputService|"
+"WbioSrvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=WbioSrvc|Name=WbioSrvc|"
+"wcncsvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=wcncsvc|Name=wcncsvc|"
+"WMPNetworkSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=WMPNetworkSvc|Name=WMPNetworkSvc|"
+"icssvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=icssvc|Name=icssvc|"
+"Wms"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=Wms|Name=Wms|"
+"WmsRepair"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=WmsRepair|Name=WmsRepair|"
+"WinRM"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=WinRM|Name=WinRM|"
+"XblAuthManager"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=XblAuthManager|Name=XblAuthManager|"
+"XblGameSave"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=XblGameSave|Name=XblGameSave|"
+"XboxNetApiSvc"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=XboxNetApiSvc|Name=XboxNetApiSvc|"
+"Termservice"="v2.33|Action=Block|Active=TRUE|Dir=In|Svc=Termservice|Name=Termservice|"
+
+
+
 
 [HKEY_LOCAL_MACHINE\System\ControlSet001\Services\SharedAccess\Parameters\FirewallPolicy\PrivateProfile]
 "DefaultInboundAction"=dword:00000001
@@ -741,8 +796,10 @@ Windows Registry Editor Version 5.00
 "ConsentPromptBehaviorEnhancedAdmin"=dword:00000001
 "ConsentPromptBehaviorAdmin"=dword:00000001
 "ConsentPromptBehaviorUser"=dword:00000000
+"LocalAccountTokenFilterPolicy"=dword:00000000
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System]
 "ConsentPromptBehaviorEnhancedAdmin"=dword:00000001
 "ConsentPromptBehaviorAdmin"=dword:00000001
 "ConsentPromptBehaviorUser"=dword:00000000
+"LocalAccountTokenFilterPolicy"=dword:00000000

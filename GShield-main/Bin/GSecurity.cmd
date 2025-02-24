@@ -1,38 +1,5 @@
 @echo off
 
-:: dht
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer /f
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections" /v SavedLegacySettings /f
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v AutoConfigURL /f
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyOverride /f
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections" /v DefaultConnectionSettings /f
-Reg DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxySettingsPerUser /f
-Reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\IPSec\Policy\Local" /f
-Reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\IPSec\Policy\Local" /f
-bitsadmin /reset /allusers
-Reg delete "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer" /f /reg:32
-Reg delete "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer" /f /reg:64
-Reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f
-Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f
-Reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f
-Reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f
-Reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options" /f
-Reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options" /f
-Reg add "HKLM\Software\Policies\Microsoft\Windows NT\SystemRestore" /v DisableConfig /t REG_DWORD /d 0 /f
-Reg add "HKLM\Software\Policies\Microsoft\Windows NT\SystemRestore" /v DisableSR /t REG_DWORD /d 0 /f
-Reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /f
-Reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend /f /v Start /t REG_DWORD /d 0x00000002
-Reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /f /v DisableAntiSpyware /t REG_DWORD /d 0x00000000
-Reg add "HKLM\SYSTEM\CurrentControlSet\services\MpsSvc" /V Start /T REG_DWORD /D 2 /F
-Reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /f /v EnableFirewall /t REG_DWORD /d 0x00000001
-Reg delete "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /f /v DoNotAllowExceptions
-Reg add "HKLM\SYSTEM\CurrentControlSet\services\wuauserv" /V Start /T REG_DWORD /D 2 /F
-Reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /f /v NoWindowsUpdate
-Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f
-Reg add "HKLM\SYSTEM\CurrentControlSet\services\wscsvc" /V Start /T REG_DWORD /D 2 /F
-Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /f /v HideSCAHealth /t REG_SZ /d 0
-Reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /f /v HideSCAHealth /t REG_SZ /d 0
-
 :: Autopilot
 @powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Uninstall-ProvisioningPackage -AllInstalledPackages"
 rd /s /q %ProgramData%\Microsoft\Provisioning
@@ -59,63 +26,6 @@ for /f "tokens=*" %%u in ('net user ^| findstr /i /c:"User" ^| find /v "command 
     )
 )
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f
-
-:: services
-sc config FastUserSwitchingCompatibility start= disabled
-sc config seclogon start= disabled
-sc config LanmanServer start= disabled
-sc config LanmanWorkstation start= disabled
-sc config TrkWks start= disabled
-sc config ALG start= disabled
-sc config hkmsvc start= disabled
-sc config SharedAccess start= automatic
-sc config Netlogon start= disabled
-sc config RpcLocator start= disabled
-sc config RemoteRegistry start= disabled
-sc config RemoteAccess start= disabled
-sc config SCardSvr start= disabled
-sc config AJRouter start= disabled
-sc config PeerDistSvc start= disabled
-sc config CertPropSvc start= disabled
-sc config NfsClnt start= disabled
-sc config dmwappushsvc start= disabled
-sc config MapsBroker start= disabled
-sc config EntAppSvc start= disabled
-sc config fsvc start= disabled
-sc config vmickvpexchange start= disabled
-sc config vmicguestinterface start= disabled
-sc config vmicshutdown start= disabled
-sc config vmicheartbeat start= disabled
-sc config vmicrdv start= disabled
-sc config vmictimesync start= disabled
-sc config vmicvmsession start= disabled
-sc config vmicvss start= disabled
-sc config IEEtwCollectorService start= disabled
-sc config iphlpsvc start= disabled
-sc config diagnosticshub.standardcollector.service start= disabled
-sc config MSiSCSI start= disabled
-sc config SmsRouter start= disabled
-sc config CscService start= disabled
-sc config RetailDemo start= disabled
-sc config SensorDataService start= disabled
-sc config SensrSvc start= disabled
-sc config SensorService start= disabled
-sc config ScDeviceEnum start= disabled
-sc config SCPolicySvc start= disabled
-sc config SNMPTRAP start= disabled
-sc config StorSvc start= disabled
-sc config TabletInputService start= disabled
-sc config WbioSrvc start= disabled
-sc config wcncsvc start= disabled
-sc config WMPNetworkSvc start= disabled
-sc config icssvc start= disabled
-sc config Wms start= disabled
-sc config WmsRepair start= disabled
-sc config WinRM start= disabled
-sc config XblAuthManager start= disabled
-sc config XblGameSave start= disabled
-sc config XboxNetApiSvc start= disabled
-sc config Termservice start= disabled
 
 :: threats
 reg add "HKLM\Software\Microsoft\Cryptography\Wintrust\Config" /v "EnableCertPaddingCheck" /t REG_SZ /d "1" /f
