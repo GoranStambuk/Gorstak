@@ -1,64 +1,36 @@
+import ctypes
+import sys
+
+# Hide console window
+if not sys.executable.endswith("pythonw.exe"):
+    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+
+# Rest of your script
 import os
 import subprocess
 import requests
-import sys
 import time
 import re
 from scapy.all import sniff, IP, TCP, UDP, DNS, DNSQR, DNSRR, conf
 import psutil
 import random
-import ctypes
 from ctypes import wintypes
 import threading
 import pefile
-import hashlib
+import pystray
+from PIL import Image
+import io
+import win32api
+import win32con
+import win32gui
+import win32ui
+from PIL import ImageWin
 
 # Set a custom cache directory
 cache_dir = os.path.join(os.getenv("TEMP"), "scapy_cache")
 os.makedirs(cache_dir, exist_ok=True)
 conf.cache_dir = cache_dir
 print(f"Scapy cache directory set to: {cache_dir}")
-
-# Function to check if Npcap is installed
-def is_npcap_installed():
-    try:
-        npcap_path = os.path.join(os.environ["SystemRoot"], "System32", "npcap")
-        return os.path.exists(npcap_path)
-    except Exception:
-        return False
-
-# Function to download and install Npcap
-def install_npcap():
-    npcap_url = "https://npcap.com/dist/npcap-oem-1.75.exe"
-    npcap_installer = "npcap_installer.exe"
-
-    print("Downloading Npcap OEM...")
-    try:
-        response = requests.get(npcap_url, stream=True)
-        with open(npcap_installer, "wb") as file:
-            for chunk in response.iter_content(chunk_size=8192):
-                file.write(chunk)
-    except Exception as e:
-        print(f"Failed to download Npcap: {e}")
-        return False
-
-    print("Installing Npcap OEM...")
-    try:
-        command = [
-            npcap_installer,
-            "/S",
-            "/winpcap_mode=yes",
-            "/loopback_support=no",
-        ]
-        subprocess.run(command, check=True)
-        print("Npcap installed successfully.")
-        return True
-    except Exception as e:
-        print(f"Failed to install Npcap: {e}")
-        return False
-    finally:
-        if os.path.exists(npcap_installer):
-            os.remove(npcap_installer)
 
 # URLs to fetch filter lists
 FILTER_LIST_URLS = [
@@ -224,6 +196,18 @@ def start_key_scrambler():
     threading.Thread(target=key_scrambler, daemon=True).start()
 
 # Function to delete unsigned DLLs
+def take_ownership(file_path):
+    """Take ownership of a file and grant full control to the current user."""
+    try:
+        # Take ownership of the file
+        subprocess.run(["takeown", "/f", file_path], check=True)
+        
+        # Grant full control to the current user
+        subprocess.run(["icacls", file_path, "/grant", "*S-1-1-0:F"], check=True)
+        print(f"Successfully took ownership of: {file_path}")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to take ownership of {file_path}: {e}")
+
 def delete_unsigned_dlls():
     quarantine_folder = os.path.join(os.environ["SystemDrive"], "Quarantine")
     if not os.path.exists(quarantine_folder):
@@ -236,11 +220,19 @@ def delete_unsigned_dlls():
                 if dll_path.endswith(".dll"):
                     try:
                         pe = pefile.PE(dll_path)
-                        if not pe.verify():
+                        if not hasattr(pe, 'DIRECTORY_ENTRY_SECURITY'):
                             print(f"Unsigned DLL found: {dll_path}")
+                            
+                            # Take ownership of the DLL
+                            take_ownership(dll_path)
+                            
+                            # Move the DLL to the quarantine folder
                             dest = os.path.join(quarantine_folder, os.path.basename(dll_path))
-                            os.rename(dll_path, dest)
-                            print(f"Moved to quarantine: {dest}")
+                            try:
+                                os.rename(dll_path, dest)
+                                print(f"Moved to quarantine: {dest}")
+                            except PermissionError as e:
+                                print(f"Permission denied: {dll_path} (skipping)")
                     except pefile.PEFormatError:
                         continue
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
@@ -261,19 +253,41 @@ def stop_web_servers():
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
 
+# Taskbar icon
+def create_taskbar_icon():
+    # Extract the icon from the EXE file
+    exe_path = sys.executable
+    try:
+        # Load the icon from the EXE file
+        ico_x = win32api.GetSystemMetrics(win32con.SM_CXICON)
+        ico_y = win32api.GetSystemMetrics(win32con.SM_CYICON)
+        large, small = win32gui.ExtractIconEx(exe_path, 0)
+        win32gui.DestroyIcon(small[0])
+
+        # Convert the icon to a PIL image
+        hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(0))
+        hbmp = win32ui.CreateBitmap()
+        hbmp.CreateCompatibleBitmap(hdc, ico_x, ico_y)
+        hdc = hdc.CreateCompatibleDC()
+        hdc.SelectObject(hbmp)
+        hdc.DrawIcon((0, 0), large[0])
+        bmpinfo = hbmp.GetInfo()
+        bmpstr = hbmp.GetBitmapBits(True)
+        image = Image.frombuffer(
+            "RGB",
+            (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
+            bmpstr, "raw", "BGRX", 0, 1
+        )
+
+        # Create the taskbar icon
+        menu = pystray.Menu(pystray.MenuItem("Exit", lambda: sys.exit(0)))
+        icon = pystray.Icon("GShield", image, "GShield", menu)
+        icon.run()
+    except Exception as e:
+        print(f"Failed to create taskbar icon: {e}")
+
 # Main function
 def main():
-    if not is_npcap_installed():
-        print("Npcap is not installed.")
-        if install_npcap():
-            print("Npcap installed successfully. Please restart the script.")
-            sys.exit(0)
-        else:
-            print("Failed to install Npcap. Exiting.")
-            sys.exit(1)
-    else:
-        print("Npcap is already installed.")
-
     load_filter_lists()
 
     # Start packet filtering in a separate thread
@@ -281,6 +295,9 @@ def main():
 
     # Start firewall rules in a separate thread
     threading.Thread(target=firewall_rules, daemon=True).start()
+
+    # Start taskbar icon in the main thread
+    create_taskbar_icon()
 
     # Start security monitoring
     while True:
