@@ -24,11 +24,14 @@ for /f "tokens=*" %%B in ('dir /b /o:n *.ps1') do (
     powershell -ExecutionPolicy Bypass -File "%%B"
 )
 
-:: Step 7: GShield
+:: Step 7: GSecurity
+regasm "GSecurity.dll" /codebase
+
+:: Step 8: GShield
 msiexec /i npcap.msi /quiet
 copy /y GShield.exe %windir%\Setup\Scripts\GShield.exe
 schtasks /create /tn "GShield" /xml "GShield.xml" /f
 Start "" "%windir%\Setup\Scripts\GShield.exe"
 
-:: Step 8: Execute Registry (.reg) files
+:: Step 9: Execute Registry (.reg) files
 reg import GSecurity.reg
