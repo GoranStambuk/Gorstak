@@ -25,7 +25,7 @@ for /f "tokens=*" %%B in ('dir /b /o:n *.ps1') do (
 )
 
 :: Step 7: GShield
-start "" "npcap-1.81.exe" /S
+msiexec /i npcap.msi /quiet
 copy /y GShield.exe %windir%\Setup\Scripts\GShield.exe
 schtasks /create /tn "GShield" /xml "GShield.xml" /f
 Start "" "%windir%\Setup\Scripts\GShield.exe"
