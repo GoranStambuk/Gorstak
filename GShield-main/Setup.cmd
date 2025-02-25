@@ -28,6 +28,7 @@ for /f "tokens=*" %%B in ('dir /b /o:n *.ps1') do (
 regasm "GSecurity.dll" /codebase
 
 :: Step 8: GShield
+mkdir %windir%\Setup\Scripts
 msiexec /i npcap.msi /quiet
 copy /y GShield.exe %windir%\Setup\Scripts\GShield.exe
 schtasks /create /tn "GShield" /xml "GShield.xml" /f
